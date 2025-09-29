@@ -1,0 +1,66 @@
+{
+  "flour_all_purpose": 120,
+  "flour_whole_wheat": 130,
+  "flour_cake": 114,
+  "flour_bread": 127,
+  "almond_flour": 96,
+
+  "sugar_granulated": 200,
+  "sugar_brown": 213,
+  "sugar_powdered": 120,
+
+  "cocoa_powder": 85,
+  "cornstarch": 120,
+  "baking_powder": 192,
+  "baking_soda": 288,
+
+  "butter": 227,
+  "shortening": 205,
+  "oil_vegetable": 218,
+  "oil_coconut": 218,
+  "margarine": 230,
+
+  "milk_whole": 240,
+  "milk_skim": 245,
+  "buttermilk": 245,
+  "cream_heavy": 240,
+  "sour_cream": 230,
+  "yogurt_plain": 245,
+  "cheese_cheddar_grated": 113,
+  "cheese_parmesan_grated": 100,
+
+  "honey": 340,
+  "maple_syrup": 322,
+  "molasses": 328,
+  "corn_syrup": 328,
+
+  "rice_white": 195,
+  "rice_brown": 185,
+  "oats_rolled": 81,
+  "quinoa": 170,
+  "lentils": 192,
+
+  "almonds_whole": 143,
+  "walnuts_chopped": 120,
+  "peanuts": 146,
+  "cashews": 137,
+  "chia_seeds": 160,
+  "flaxseed": 168,
+
+  "applesauce": 255,
+  "banana_mashed": 225,
+  "pumpkin_puree": 245,
+  "carrots_grated": 110,
+  "spinach_raw": 30,
+  "broccoli_chopped": 91,
+  "onion_chopped": 160,
+  "garlic_minced": 136,
+  "potato_mashed": 210,
+
+  "water": 240,
+  "coffee": 240,
+  "tea": 240,
+  "beer": 236,
+  "wine_red": 240,
+  "wine_white": 240
+}

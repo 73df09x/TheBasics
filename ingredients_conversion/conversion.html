@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ingredient Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f8f8f8;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+    .converter {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    select, input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      background: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e9ffe9;
+      border: 1px solid #b2ffb2;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ingredient Converter</h1>
+  <div class="converter">
+    <label for="ingredient">Choose Ingredient:</label>
+    <select id="ingredient"></select>
+
+    <label for="value">Enter Value:</label>
+    <input type="number" id="value" placeholder="Enter amount">
+
+    <label for="fromUnit">From Unit:</label>
+    <select id="fromUnit">
+      <option value="g">Grams (g)</option>
+      <option value="kg">Kilograms (kg)</option>
+      <option value="oz">Ounces (oz)</option>
+      <option value="lb">Pounds (lb)</option>
+      <option value="ml">Milliliters (ml)</option>
+      <option value="l">Liters (l)</option>
+      <option value="cup">Cups</option>
+      <option value="tbsp">Tablespoons</option>
+      <option value="tsp">Teaspoons</option>
+    </select>
+
+    <label for="toUnit">To Unit:</label>
+    <select id="toUnit">
+      <option value="g">Grams (g)</option>
+      <option value="kg">Kilograms (kg)</option>
+      <option value="oz">Ounces (oz)</option>
+      <option value="lb">Pounds (lb)</option>
+      <option value="ml">Milliliters (ml)</option>
+      <option value="l">Liters (l)</option>
+      <option value="cup">Cups</option>
+      <option value="tbsp">Tablespoons</option>
+      <option value="tsp">Teaspoons</option>
+    </select>
+
+    <button onclick="convert()">Convert</button>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    let ingredients = {};
+
+    async function loadIngredients() {
+      try {
+        const response = await fetch("ingredients.json");
+        ingredients = await response.json();
+
+        const ingredientSelect = document.getElementById("ingredient");
+        Object.keys(ingredients).forEach(key => {
+          const option = document.createElement("option");
+          option.value = key;
+          option.textContent = key.replace(/_/g, " ");
+          ingredientSelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error("Error loading ingredients.json:", error);
+      }
+    }
+
+    function convert() {
+      const ingredient = document.getElementById("ingredient").value;
+      const value = parseFloat(document.getElementById("value").value);
+      const fromUnit = document.getElementById("fromUnit").value;
+      const toUnit = document.getElementById("toUnit").value;
+
+      if (!ingredient || isNaN(value)) {
+        document.getElementById("result").innerText = "Please enter a valid value and select ingredient.";
+        return;
+      }
+
+      const data = ingredients[ingredient];
+      if (!data) {
+        document.getElementById("result").innerText = "Ingredient not found.";
+        return;
+      }
+
+      // Step 1: Convert from input unit to grams
+      let grams;
+      if (data[fromUnit]) {
+        grams = value * data[fromUnit];
+      } else if (fromUnit === "g") {
+        grams = value;
+      } else {
+        document.getElementById("result").innerText = `Conversion from ${fromUnit} not supported for ${ingredient}`;
+        return;
+      }
+
+      // Step 2: Convert grams to target unit
+      let result;
+      if (toUnit === "g") {
+        result = grams;
+      } else if (data[toUnit]) {
+        result = grams / data[toUnit];
+      } else {
+        document.getElementById("result").innerText = `Conversion to ${toUnit} not supported for ${ingredient}`;
+        return;
+      }
+
+      document.getElementById("result").innerText =
+        `${value} ${fromUnit} of ${ingredient.replace(/_/g, " ")} = ${result.toFixed(2)} ${toUnit}`;
+    }
+
+    loadIngredients();
+  </script>
+</body>
+</html>
